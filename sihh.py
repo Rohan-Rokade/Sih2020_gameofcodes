@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 dataset=pd.read_csv("https://github.com/Rohan-Rokade/networkdetector/blob/master/sihdata.csv",header=None,error_bad_lines=False)
 
 st.title('NETWORK DETECTION')
-
+st.title(dataset.head())
 
 st.header("Plotting on Indian Map")
 
