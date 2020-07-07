@@ -17,12 +17,7 @@ map_data = pd.DataFrame(
 
 st.map(map_data)
 
-data['LSA'].replace('Chennai','Tamil Nadu',inplace=True)
-data['LSA'].replace('Kolkata','West Bengal',inplace=True)
-data['LSA'].replace('Mumbai','Maharashtra',inplace=True)
-data['LSA'].replace('North East','Arunachal Pradesh',inplace=True)
-data['LSA'].replace('UP East','UP',inplace=True)
-data['LSA'].replace('UP West','UP',inplace=True)
+
 
 
 def calculate_city(LSA):
@@ -85,6 +80,12 @@ def calculate_city(LSA):
         City=c(L18)
     return City
 data['City']=data['LSA'].apply(calculate_city)
+data['LSA'].replace('Chennai','Tamil Nadu',inplace=True)
+data['LSA'].replace('Kolkata','West Bengal',inplace=True)
+data['LSA'].replace('Mumbai','Maharashtra',inplace=True)
+data['LSA'].replace('North East','Arunachal Pradesh',inplace=True)
+data['LSA'].replace('UP East','UP',inplace=True)
+data['LSA'].replace('UP West','UP',inplace=True)
 
 
 
