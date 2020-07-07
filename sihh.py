@@ -4,7 +4,7 @@ import numpy as np
 from random import choice as c
 import matplotlib.pyplot as plt
 
-data=pd.read_csv("https://github.com/Rohan-Rokade/networkdetector/blob/master/sihdata.csv",nrows=nrows)
+data=pd.read_csv("https://github.com/Rohan-Rokade/networkdetector/blob/master./sihdata.csv",nrows=nrows)
 
 st.title('NETWORK DETECTION')
 
