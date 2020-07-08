@@ -23,7 +23,7 @@ def view_all_users():
     return data
 
 def main():
-    menu=["Home ","login","sign up"]
+    menu=["Home ","login"]
     choice=st.sidebar.selectbox("Menu",menu,index=0)
 
     if choice =="Home":
@@ -57,20 +57,6 @@ def main():
                     st.subheader("Profiles")
             else :
                 st.warning("Incorrect username/Password")
-            
-
-
-    elif choice == "sign up":
-        st.subheader("Create New Account")
-
-        new_user=st.text_input("Username")
-        new_password=st.text_input("Password",type="password")
-
-        if st.button("Sign Up"):
-            create_usertable()
-            add_userdata(new_user,new_password)
-            st.success("You have successfully created a account")
-            st.info("go to login")
         
        
 
