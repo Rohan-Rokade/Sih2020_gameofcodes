@@ -1,5 +1,6 @@
 import streamlit as st
 import sqlite3
+import plotly.express as px
 
 
 conn=sqlite3.connect('data.db')
@@ -28,6 +29,20 @@ def main():
 
     if choice =="Home":
         st.subheader("Home")
+
+        vendors = ["A", "B", "C", "D", None, "E", "F", "G", "H", None]
+        sectors = ["Tech", "Tech", "Finance", "Finance", "Other",
+           "Tech", "Tech", "Finance", "Finance", "Other"]
+        regions = ["North", "North", "North", "North", "North",
+           "South", "South", "South", "South", "South"]
+        sales = [1, 3, 2, 4, 1, 2, 2, 1, 4, 1]
+        df = pd.DataFrame(dict(vendors=vendors, sectors=sectors, regions=regions, sales=sales))
+        df["all"] = "all" # in order to have a single root node
+        print(df)
+        fig = px.treemap(df, path=['all', 'regions', 'sectors', 'vendors'], values='sales')
+        fig.show()
+
+         
 
     elif choice=="login":
         st.subheader("login section")
