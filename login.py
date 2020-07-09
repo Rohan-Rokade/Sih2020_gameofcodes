@@ -24,7 +24,7 @@ def view_all_users():
     return data
 
 def main():
-    menu=["Home ","login"]
+    menu=["Home "]
     choice=st.sidebar.selectbox("Menu",menu,index=0)
 
     if choice =="Home":
@@ -41,40 +41,6 @@ def main():
         print(df)
         fig = px.treemap(df, path=['all', 'regions', 'sectors', 'vendors'], values='sales')
         st.plotly_chart(fig)
-
-         
-
-    elif choice=="login":
-        st.subheader("login section")
-
-        username=st.sidebar.text_input("User Name")
-        password=st.sidebar.text_input("Password",type="password")
-        
-        if st.sidebar.checkbox("Login"):
-            
-            create_usertable()
-            result=login_user(username,password)
-
-            if result:
-                
-                st.success("Logged in as {}".format(username))
-
-                task=["Analytics","Profiles","engineer"]
-                st.selectbox("Task",task)
-
-                if task == "engineer":
-                    st.subheader("Engineer")
-
-                elif task=="Analytics":
-                    st.subheader("Analytics")
-
-                elif task == "Profiles":
-                    st.subheader("Profiles")
-            else :
-                st.warning("Incorrect username/Password")
-        
-       
-
         
 
 
