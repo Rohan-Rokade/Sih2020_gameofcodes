@@ -9,4 +9,4 @@ streamlit
 
 plotly
 
-urlib
+urllib3==1.25.8
