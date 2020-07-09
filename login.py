@@ -5,7 +5,7 @@ from urllib.request import urlopen
 
 st.subheader("Home")
 
-from urllib.request import urlopen
+#from urllib.request import urlopen
 df = pd.read_csv("https://raw.githubusercontent.com/Rohan-Rokade/networkdetector/master/sihdata.csv")
 st.write(df.head())
 
