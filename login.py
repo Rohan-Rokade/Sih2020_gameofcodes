@@ -41,6 +41,7 @@ def main():
         print(df)
         fig = px.treemap(df, path=['all', 'regions', 'sectors', 'vendors'], values='sales')
         fig.show()
+        st.pyplot()
 
          
 
