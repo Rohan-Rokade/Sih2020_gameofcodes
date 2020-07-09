@@ -40,8 +40,7 @@ def main():
         df["all"] = "all" # in order to have a single root node
         print(df)
         fig = px.treemap(df, path=['all', 'regions', 'sectors', 'vendors'], values='sales')
-        fig.show()
-        st.pyplot()
+        st.plotly_chart(fig)
 
          
 
