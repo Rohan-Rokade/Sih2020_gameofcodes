@@ -9,6 +9,5 @@ streamlit
 
 plotly
 
-random
 
 time
