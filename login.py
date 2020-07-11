@@ -4,7 +4,6 @@ import numpy as np
 from random import choice as c
 import matplotlib.pyplot as plt 
 import plotly.express as px
-import time 
 
 
 st.title("Visualization Of Poor Cellular connectiviy and Analyze Reports")
@@ -86,35 +85,68 @@ def load_data():
 dt=load_data()
 st.table(dt.head())
 
-
-state_menu=dt['LSA'].unique()
+st.header("Analyzis and visualization ")
 if st.checkbox("Filter by state and city analyze",value=False):
-    st.write(state_menu)
-    #options = list(range(len(state_menu)))
-    #state_option = st.selectbox('select state',options,format_func=lambda x:state_menu[x])
-    state_option = st.selectbox('Select  the state',state_menu)
-    x=state_option
-    dataset1=dt.loc[dt['LSA']==x]
-    st.write('You selected :',x)
-    st.table(dataset1.describe())
-    city_menu=dataset1['city'].unique()
-    if st.checkbox("city analyze",value=False):
-        st.write(city_menu)
-        city_option=st.selectbox('select the city',city_menu)
-        y=city_option
-        st.write("You Selected:",y)
-        dataset2=dataset1.loc[dt['city']==y]
-        st.table(dataset2.describe())
+    
+    state_arr=dt['LSA'].unique()
+    emp_arr=['']
+    state_menu=np.append(emp_arr,state_arr)
+    
+    state_selected = st.selectbox('Select one State:',state_menu, format_func=lambda u: 'Select an option' if u == '' else u)
+    if state_selected:
+        st.success("You selected a state")
+        x=state_selected
+        
+        if st.checkbox("City Level",value=False):
+            
+            dataset1=dt.loc[dt['LSA']==x]
+            city_arr=dataset1['city'].unique()
+            city_menu=np.append(emp_arr,city_arr)
 
-        st.subheader("Bar chart Analysis:")
-        plt.hist(dataset2.Service_Provider)
-        st.pyplot()
+            city_selected = st.selectbox('Select one city:',city_menu, format_func=lambda v: 'Select an option' if v == '' else v)
+            
+            if city_selected:
+                st.success("You selected a city")
+                y=city_selected
+                st.write("Selected City:",y)
+                dataset2=dataset1.loc[dt['city']==y]
 
-        data_canada = dataset2[dataset2['Service_Provider']== 'JIO']
-        fig1 = px.bar(data_canada,'Signal_strength')
-        st.plotly_chart(fig1)
+                st.header("Analyze for selected city")
 
-if st.checkbox(" Maps using  deck gl library"):
+                if st.checkbox("Summary desrcibtion",value=False):
+                    st.table(dataset2.describe())
+                
+                if st.checkbox(' analyzisng signal strength by grouping service providers',value=False):
+                    fig11=px.bar(dataset2,x='Signal_strength',color='Service_Provider',barmode='group')
+                    st.plotly_chart(fig11)
+
+                if st.checkbox("Analyze signal strength At individual service Provider",value=False):
+                    ser_prov_arr=dataset2['Service_Provider'].unique()
+                    ser_prov_menu=np.append(emp_arr,ser_prov_arr)
+                    ser_prov_selected=st.selectbox('Select one Service provider:',ser_prov_menu, format_func=lambda w: 'Select an option' if w == '' else w)
+
+                    if ser_prov_selected:
+                        z=ser_prov_selected
+                        ser_data= dataset2[dataset2['Service_Provider']==z]
+                        fig12 = px.bar(ser_data,'Signal_strength')
+                        st.plotly_chart(fig12)
+
+                    else:
+                        st.warning('No option selected')
+
+                if st.checkbox("Over view of all service provider analyze",value=False):
+                    plt.hist(dataset2.Service_Provider)
+                    st.pyplot()
+               
+            else:
+                st.warning('No option selected')
+        
+        
+    else:
+        st.warning('No option is selected')
+
+st.subheader("Maps using deck gl library")        
+if st.checkbox("Click box to view and unclick to unview it"):
         data = pd.DataFrame({
             'awesome cities' : ['Chicago', 'Minneapolis', 'Louisville', 'Topeka'],
             'lat' : [41.868171, 44.979840,  38.257972, 39.030575],
@@ -152,25 +184,27 @@ if st.checkbox(" Maps using  deck gl library"):
                     }]
                 )
 
-if st.checkbox("Display of map using streamlit in-built map method st.map()"):
+
+st.subheader("Display of map using streamlit in-built map method st.map()")
+if st.checkbox("Click box to view  sttreamlit map"):
     st.write("Pretending Maps take some expensive time ,set time delay to 15 secs,once loaded it will diplay done message.")
-    with st.spinner('Wait for it...'):
-        
-        df = pd.DataFrame(np.random.randn(10000, 2) / [50, 50] + [19.0760,72.877],columns=['lat', 'lon'])
-        time.sleep(15)
-        st.map(df)
+    with st.spinner('Wait for it...'):        
+        df1 = pd.DataFrame(np.random.randn(10000, 2) / [50, 50] + [19.0760,72.877],columns=['lat', 'lon'])
+        st.map(df1)
     st.success('Done!')
 
-if st.checkbox("Displaying of Tree Plot"):
+    
+st.subheader("Tree Plot Analysis(Decision tree method)")
+if st.checkbox("Click box to view  tree plot and unclick to unview it"):
     st.write("Downloadable img in png format ,can also maximixe image.")
     states=['mh','up','hp','bihar','up','up','bihar','mh','mh','mh','mh','mh','bihar','up']
     cities= ["nanded","lucknow","shimla","patna","agra","lucknow","nalanda","mumbai","pune","pune","mumbai","mumbai","patna","lucknow"]
     #regions = ["North", "North", "North", "North", "North","South", "South", "South", "South", "South"]
     counting = [100,300,400,150,50,200,350,260,450,300,600,200,540,240]
-    df = pd.DataFrame(dict(states=states,cities=cities,counting=counting))
-    df["country"] = "India" # in order to have a single root node
-    print(df)
-    fig = px.treemap(df, path=['country', 'states', 'cities'], values='counting')
+    df2 = pd.DataFrame(dict(states=states,cities=cities,counting=counting))
+    df2["country"] = "India" # in order to have a single root node
+    print(df2)
+    fig = px.treemap(df2, path=['country', 'states', 'cities'], values='counting')
     st.plotly_chart(fig)
 
 
