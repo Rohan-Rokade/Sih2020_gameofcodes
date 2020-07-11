@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from random import choice as c
+import matplotlib.pyplot as plt 
 import plotly.express as px
 import time 
 
@@ -105,6 +106,13 @@ if st.checkbox("Filter by state and city analyze",value=False):
         dataset2=dataset1.loc[dt['city']==y]
         st.table(dataset2.describe())
 
+        st.subheader("Bar chart Analysis:")
+        plt.hist(dataset2.Service_Provider)
+        st.pyplot()
+
+        data_canada = dataset2[dataset2['Service_Provider']== 'JIO']
+        fig1 = px.bar(data_canada,'Signal_strength')
+        st.plotly_chart(fig1)
 
 if st.checkbox(" Maps using  deck gl library"):
         data = pd.DataFrame({
