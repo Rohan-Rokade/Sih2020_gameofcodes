@@ -10,7 +10,7 @@ import plotly.express as px
 
 
 def load_data():
-    df1 = pd.read_csv("C:\\Users\\hp\\Desktop\\January2020_MySpeed.csv")
+    df1 = pd.read_csv("https://raw.githubusercontent.com/Rohan-Rokade/networkdetector/master/January2020_MySpeed.csv")
 
     df1['signal_strength']=pd.to_numeric(df1['signal_strength'],errors='coerce')
     df1.dropna(inplace=True,axis=0)
