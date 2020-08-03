@@ -6,8 +6,6 @@ import plotly.express as px
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import pymongo
-import json
-import datetime
 
 
 
@@ -48,7 +46,7 @@ if dashboard_selectbox=="Exploratory Data Analysis Report":
 if dashboard_selectbox=="Data Visualization by filtering state and city":
     st.title("Visualization of data by filtering ")
     def load_data():
-        df1 = pd.read_csv("C:\\Users\\hp\\Desktop\\308.csv")
+        df1 = pd.read_csv("https://raw.githubusercontent.com/Rohan-Rokade/networkdetector/master/308.csv")
         df1['mobile_no']=df1['mobile_no'].astype(str) 
         df1['lat']=df1['lat'].astype(float)
         df1['lon']=df1['lon'].astype(float)
