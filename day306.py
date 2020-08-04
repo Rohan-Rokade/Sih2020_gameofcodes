@@ -122,56 +122,52 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
         db = client["natours"]
         complains= db["complaints"].find()
 
-        data = [userRecord for userRecord in complains ] 
+        data = [z for z in complains ] 
         df1 = pd.DataFrame(data)
         df1.drop(['_id', '__v'], axis=1,inplace=True)
-        df1.dropna(how='any')
         df1.rename(columns={'mobileNo':'mobile_no','serviceProvider':'Service_provider','lng':'lon'},inplace=True)
-        df1.dropna(how='any')
-        st.write(df1)
-
+        df1['mobile_no']=df1['mobile_no'].astype(str)
         df1['lat']=df1['lat'].astype(float)
         df1['lon']=df1['lon'].astype(float)
-        df1.dropna(inplace=True)
         return df1
     data=load_data()
 
-
-
     mobile_menu=data.mobile_no.unique()
-    mobile_no_selected = st.selectbox('Select one Mobile Number:',mobile_menu,key="Mobile list")
+    st.write(mobile_menu)
+    mobile_no_selected = st.selectbox('Select one Mobile Number:',mobile_menu,key="Mobile1 list")
+    if mobile_no_selected: 
     
-    x9= mobile_no_selected
-    st.success("You selected a mobile_no")
+        x9= mobile_no_selected
+        st.success("You selected a mobile_no")
 
-    st.write("User Data of",x9)
-    mobile_data=data[data.mobile_no==x9]
-    st.write(mobile_data)
+        st.write("User Data of",x9)
+        mobile_data=data[data.mobile_no==x9]
+        st.write(mobile_data)
 
 
-    '''data2 = pd.DataFrame({
-   
-        'lat' :mobile_data['lat'] ,
-        'lon' :mobile_data['lon'] })
+        data2 = pd.DataFrame({
+    
+            'lat' :mobile_data['lat'] ,
+            'lon' :mobile_data['lon'] })
 
-        # Adding code so we can have map default to the center of the data
+            # Adding code so we can have map default to the center of the data
         midpoint = (np.average(data2['lat']), np.average(data2['lon']))
 
         st.deck_gl_chart(
-                    viewport={
-                        'latitude': midpoint[0],
-                        'longitude':  midpoint[1],
-                        'zoom': 4
-                    },
-                    layers=[{
-                        'type': 'ScatterplotLayer',
-                        'data': data2,
-                        'radiusScale': 0.1,
-                        'radiusMinPixels': 1,
-                        'getFillColor': [248, 24, 148],
-                    }]
-                )'''
-    st.map(mobile_data)
+                        viewport={
+                            'latitude': midpoint[0],
+                            'longitude':  midpoint[1],
+                            'zoom': 4
+                        },
+                        layers=[{
+                            'type': 'ScatterplotLayer',
+                            'data': data2,
+                            'radiusScale': 0.1,
+                            'radiusMinPixels': 1,
+                            'getFillColor': [248, 24, 148],
+                        }]
+                    )
+        st.map(mobile_data)
 
 
 if dashboard_selectbox=="Plotting Data of all users":
@@ -200,7 +196,7 @@ if dashboard_selectbox=="Plotting Data of all users":
         st.write(dt111)
         dt111.drop_duplicates(inplace=True)
 
-        '''data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
+        data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
 
         midpoint = (np.average(data2['lat']), np.average(data2['lon']))
 
@@ -217,8 +213,7 @@ if dashboard_selectbox=="Plotting Data of all users":
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
-                )'''
-        st.map(dt111)
+                )
             
 if dashboard_selectbox=="Data Visualization by filtering Service Provider":
     st.title("Data visulization on basis of service provider")
@@ -264,11 +259,11 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
         st.write("Signal strength analysis of",spl)
         st.plotly_chart(fig2)
 
-        dt111=dt11[['lat','lon']]
+        dt111=dt1[['lat','lon']]
         dt111.drop_duplicates(inplace=True)
         st.write(dt111)
 
-        '''data2 = pd.DataFrame({
+        data2 = pd.DataFrame({
    
         'lat' :dt111['lat'] ,
         'lon' :dt111['lon'] })
@@ -289,5 +284,4 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
-                )'''
-        st.write(dt111)
+                )
