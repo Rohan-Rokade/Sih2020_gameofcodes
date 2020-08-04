@@ -201,7 +201,7 @@ if dashboard_selectbox=="Plotting Data of all users":
         data=load_data()
         st.write(data)
 
-        dt111=dt11[['lat','lon']]
+        dt111=data[['lat','lon']]
         dt111.drop_duplicates(inplace=True)
 
         data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
