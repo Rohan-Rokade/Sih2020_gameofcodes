@@ -35,9 +35,6 @@ if dashboard_selectbox=="Home":
     st.header("DATA ANALYTICS AND DATA VISUALIZATION")
   
 
-
-
-
 if dashboard_selectbox=="Data Visualization by filtering state and city":
     st.title("Visualization of data by filtering ")
     def load_data():
@@ -186,7 +183,7 @@ if dashboard_selectbox=="Plotting Data of all users":
                     layers=[{
                         'type': 'ScatterplotLayer',
                         'data': data2,
-                        'radiusScale': 5,
+                        'radiusScale': 0.1,
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
