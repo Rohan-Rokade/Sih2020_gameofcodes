@@ -138,20 +138,18 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
 
 
 
-    mobile_arr=data.mobile_no.unique()
-    emp_arr=['']
-    mobile_menu=np.append(emp_arr,mobile_arr)
-    mobile_no_selected = st.selectbox('Select one Mobile Number:',mobile_menu,format_func=lambda u: 'Select an option' if u == '' else u,key="Mobile list")
-    if mobile_no_selected:
-        x9= mobile_no_selected
-        st.success("You selected a mobile_no")
+    mobile_menu=data.mobile_no.unique()
+    mobile_no_selected = st.selectbox('Select one Mobile Number:',mobile_menu,key="Mobile list")
+    
+    x9= mobile_no_selected
+    st.success("You selected a mobile_no")
 
-        st.write("User Data of",x9)
-        mobile_data=data[data.mobile_no==x9]
-        st.write(mobile_data)
+    st.write("User Data of",x9)
+    mobile_data=data[data.mobile_no==x9]
+    st.write(mobile_data)
 
 
-        data2 = pd.DataFrame({
+    '''data2 = pd.DataFrame({
    
         'lat' :mobile_data['lat'] ,
         'lon' :mobile_data['lon'] })
@@ -172,10 +170,8 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
-                )
-
-    else:
-        st.warning("No mobile number selected")
+                )'''
+        st.map(mobile_data)
 
 
 if dashboard_selectbox=="Plotting Data of all users":
@@ -204,7 +200,7 @@ if dashboard_selectbox=="Plotting Data of all users":
         st.write(dt111)
         dt111.drop_duplicates(inplace=True)
 
-        data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
+        '''data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
 
         midpoint = (np.average(data2['lat']), np.average(data2['lon']))
 
@@ -221,7 +217,8 @@ if dashboard_selectbox=="Plotting Data of all users":
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
-                )
+                )'''
+        st.map(dt111)
             
 if dashboard_selectbox=="Data Visualization by filtering Service Provider":
     st.title("Data visulization on basis of service provider")
@@ -271,7 +268,7 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
         dt111.drop_duplicates(inplace=True)
         st.write(dt111)
 
-        data2 = pd.DataFrame({
+        '''data2 = pd.DataFrame({
    
         'lat' :dt111['lat'] ,
         'lon' :dt111['lon'] })
@@ -292,4 +289,5 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
-                )
+                )'''
+        st.write(dt111)
