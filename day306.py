@@ -130,7 +130,6 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
         df1.dropna(how='any')
         st.write(df1)
 
-        df1['mobile_no']=df1['mobile_no'] 
         df1['lat']=df1['lat'].astype(float)
         df1['lon']=df1['lon'].astype(float)
         df1.dropna(inplace=True)
@@ -269,8 +268,8 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
         st.plotly_chart(fig2)
 
         dt111=dt11[['lat','lon']]
-        st.write(dt111)
         dt111.drop_duplicates(inplace=True)
+        st.write(dt111)
 
         data2 = pd.DataFrame({
    
