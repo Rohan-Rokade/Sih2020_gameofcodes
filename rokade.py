@@ -6,25 +6,11 @@ import plotly.express as px
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import pymongo
-
-
-
-
-dashboard_selectbox = st.sidebar.selectbox(
-    "Select an option",
-    ("Home", "Exploratory Data Analysis Report","Data Visualization by filtering state and city","Data Visualization by filtering Mobile Number","Plotting Data of all users","Data Visualization by filtering Service Provider"),key="Dashboard")
-
-if dashboard_selectbox=="Home":
-    st.header("DATA ANALYTICS AND DATA VISUALIZATION")
-  
-
-
-if dashboard_selectbox=="Exploratory Data Analysis Report":
-    
-    def load_data():
+@st.cache
+def load_data():
             DATABASE = "mongodb+srv://amaan:PwxIIvIMb2tTow3z@cluster0-myavd.mongodb.net/natours?retryWrites=true&w=majority"
             client = pymongo.MongoClient(DATABASE)
-
+        
             db = client["natours"]
             mobileusers= db["mobileusers"].find()
 
@@ -33,15 +19,21 @@ if dashboard_selectbox=="Exploratory Data Analysis Report":
             df1.drop(['_id', '__v'], axis=1,inplace=True)
             df1.dropna(how='any')
             df1.rename(columns={'serviceProvider':'Service_provider','lng':'lon','dBm':'signal_strength'},inplace=True)
-       
+
             df1['lat']=df1['lat'].astype(float)
             df1['lon']=df1['lon'].astype(float)
             df1.dropna(inplace=True)
             return df1
-            
-    data=load_data()
-    profile=ProfileReport(data)
-    st_profile_report(profile)
+data=load_data()
+
+
+dashboard_selectbox = st.sidebar.selectbox(
+    "Select an option",
+    ("Home", "Data Visualization by filtering state and city","Data Visualization by filtering Mobile Number","Plotting Data of all users","Data Visualization by filtering Service Provider"),key="Dashboard")
+
+if dashboard_selectbox=="Home":
+    st.header("DATA ANALYTICS AND DATA VISUALIZATION")
+  
 
 if dashboard_selectbox=="Data Visualization by filtering state and city":
     st.title("Visualization of data by filtering ")
@@ -171,24 +163,7 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
 
 if dashboard_selectbox=="Plotting Data of all users":
         st.write()
-        def load_data():
-            DATABASE = "mongodb+srv://amaan:PwxIIvIMb2tTow3z@cluster0-myavd.mongodb.net/natours?retryWrites=true&w=majority"
-            client = pymongo.MongoClient(DATABASE)
         
-            db = client["natours"]
-            mobileusers= db["mobileusers"].find()
-
-            data = [userRecord for userRecord in mobileusers  ] 
-            df1= pd.DataFrame(data)
-            df1.drop(['_id', '__v'], axis=1,inplace=True)
-            df1.dropna(how='any')
-            df1.rename(columns={'serviceProvider':'Service_provider','lng':'lon','dBm':'signal_strength'},inplace=True)
-
-            df1['lat']=df1['lat'].astype(float)
-            df1['lon']=df1['lon'].astype(float)
-            df1.dropna(inplace=True)
-            return df1
-        data=load_data()
         st.write(data)
 
         dt111=data[['lat','lon']]
@@ -208,7 +183,7 @@ if dashboard_selectbox=="Plotting Data of all users":
                     layers=[{
                         'type': 'ScatterplotLayer',
                         'data': data2,
-                        'radiusScale': 5,
+                        'radiusScale': 0.1,
                         'radiusMinPixels': 1,
                         'getFillColor': [248, 24, 148],
                     }]
@@ -216,25 +191,6 @@ if dashboard_selectbox=="Plotting Data of all users":
             
 if dashboard_selectbox=="Data Visualization by filtering Service Provider":
     st.title("Data visulization on basis of service provider")
-    def load_data():
-            DATABASE = "mongodb+srv://amaan:PwxIIvIMb2tTow3z@cluster0-myavd.mongodb.net/natours?retryWrites=true&w=majority"
-            client = pymongo.MongoClient(DATABASE)
-
-            db = client["natours"]
-            mobileusers= db["mobileusers"].find()
-
-            data = [userRecord for userRecord in mobileusers  ] 
-            df1= pd.DataFrame(data)
-            df1.drop(['_id', '__v'], axis=1,inplace=True)
-            df1.dropna(how='any')
-            df1.rename(columns={'serviceProvider':'Service_provider','lng':'lon','dBm':'signal_strength'},inplace=True)
-       
-            df1['lat']=df1['lat'].astype(float)
-            df1['lon']=df1['lon'].astype(float)
-            df1.dropna(inplace=True)
-            return df1
-            
-    data=load_data()
     st.write(data)
 
     service_provider_arr=data.Service_provider.unique()
