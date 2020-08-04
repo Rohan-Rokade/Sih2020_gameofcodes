@@ -151,6 +151,7 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
         mobile_data=data[data.mobile_no==x9]
         st.write(mobile_data)
 
+
         data2 = pd.DataFrame({
    
         'lat' :mobile_data['lat'] ,
@@ -200,7 +201,10 @@ if dashboard_selectbox=="Plotting Data of all users":
         data=load_data()
         st.write(data)
 
-        data2 = pd.DataFrame({'lat' :data['lat'] ,'lon' :data['lon'] })
+        dt111=dt11[['lat','lon']]
+        dt111.drop_duplicates(inplace=True)
+
+        data2 = pd.DataFrame({'lat' :dt111['lat'] ,'lon' :dt111['lon'] })
 
         midpoint = (np.average(data2['lat']), np.average(data2['lon']))
 
@@ -231,7 +235,7 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
             data = [userRecord for userRecord in mobileusers  ] 
             df1= pd.DataFrame(data)
             df1.drop(['_id', '__v'], axis=1,inplace=True)
-            #df1.dropna(how='any')
+            df1.dropna(how='any')
             df1.rename(columns={'serviceProvider':'Service_provider','lng':'lon','dBm':'signal_strength'},inplace=True)
        
             df1['lat']=df1['lat'].astype(float)
@@ -255,6 +259,7 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
         st.write("data after filtering by service provider")
         st.write(dt1)
 
+
         dt11=dt1.groupby('signal_strength').count()
         fig2=px.bar(dt11,y='Service_provider',text='Service_provider',labels={'Service_provider':'No of observations'},opacity=1)
         fig2.update_traces(texttemplate='%{text:.1s}',textposition='outside')
@@ -262,10 +267,13 @@ if dashboard_selectbox=="Data Visualization by filtering Service Provider":
         st.write("Signal strength analysis of",spl)
         st.plotly_chart(fig2)
 
+        dt111=dt11[['lat','lon']]
+        dt111.drop_duplicates(inplace=True)
+
         data2 = pd.DataFrame({
    
-        'lat' :dt1['lat'] ,
-        'lon' :dt1['lon'] })
+        'lat' :dt111['lat'] ,
+        'lon' :dt111['lon'] })
 
         # Adding code so we can have map default to the center of the data
         midpoint = (np.average(data2['lat']), np.average(data2['lon']))
