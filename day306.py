@@ -171,7 +171,7 @@ if  dashboard_selectbox=="Data Visualization by filtering Mobile Number":
                         'getFillColor': [248, 24, 148],
                     }]
                 )'''
-        st.map(mobile_data)
+    st.map(mobile_data)
 
 
 if dashboard_selectbox=="Plotting Data of all users":
